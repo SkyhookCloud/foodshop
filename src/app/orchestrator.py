@@ -137,6 +137,9 @@ def get_basket() -> dict:
     We try every plausible key before falling back to summing per-item "saving" fields.
     """
     proc = _groc("basket", "--json")
+    if _is_auth_error(proc):
+        state.auth_status = AuthStatus.UNAUTHENTICATED
+        return {"items": [], "savings": 0.0}
     if proc.returncode != 0 or not proc.stdout.strip():
         return {"items": [], "savings": 0.0}
     try:
