@@ -21,9 +21,9 @@ log = logging.getLogger(__name__)
 _proc: pexpect.spawn | None = None
 _lock = threading.Lock()
 
-_SMS_PATTERNS = ["verification code", "one.time", "sms", "otp", "code sent"]
-_SUCCESS_PATTERNS = ["logged in", "success", "welcome", "signed in"]
-_FAIL_PATTERNS = ["invalid", "incorrect", "failed", "error"]
+_SMS_PATTERNS = ["(?i)verification code", "(?i)one.time", "(?i)sms", "(?i)otp", "(?i)code sent"]
+_SUCCESS_PATTERNS = ["(?i)logged in", "(?i)success", "(?i)welcome", "(?i)signed in"]
+_FAIL_PATTERNS = ["(?i)invalid", "(?i)incorrect", "(?i)failed", "(?i)error"]
 
 
 def check_auth() -> AuthStatus:
@@ -104,7 +104,15 @@ def complete_sms(code: str) -> str:
         idx = _proc.expect(patterns, timeout=60)
         n_success = len(_SUCCESS_PATTERNS)
 
+        n_fail = len(_FAIL_PATTERNS)
+        eof_idx = n_success + n_fail
+
         if idx < n_success:
+            state.auth_status = AuthStatus.AUTHENTICATED
+            _proc = None
+            return "authenticated"
+        elif idx == eof_idx and _proc.exitstatus == 0:
+            # groc exited cleanly — session was saved even if success string was missed
             state.auth_status = AuthStatus.AUTHENTICATED
             _proc = None
             return "authenticated"
