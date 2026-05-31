@@ -1,0 +1,25 @@
+/*
+ * index.css — minimal reset only.
+ * Claude Design: add your design system here, or swap this for Tailwind / CSS modules.
+ * Class names used in components are listed in DESIGN.md.
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
+
+input {
+  font: inherit;
+}

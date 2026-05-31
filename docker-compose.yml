@@ -1,0 +1,22 @@
+services:
+  foodshop:
+    build: .
+    container_name: foodshop
+    restart: unless-stopped
+    # Port binding only needed if accessing foodshop directly (e.g. LAN without Caddy).
+    # Remove when Caddy is handling all ingress — Caddy reaches the container via
+    # the caddy-proxy network using the container name as DNS.
+    # ports:
+    #   - "8000:8000"
+    volumes:
+      - groc-session:/home/appuser/.sainsburys
+    env_file: .env
+    networks:
+      homeassistant_default: {}
+
+networks:
+  homeassistant_default:
+    external: true
+
+volumes:
+  groc-session:

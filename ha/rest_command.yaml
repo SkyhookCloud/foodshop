@@ -1,0 +1,14 @@
+# Add to configuration.yaml under rest_command:
+# (or in a separate file included via !include)
+#
+# Also add the Shopping List integration:
+#   Settings > Devices & Services > Add Integration > Shopping List
+#   This creates the todo.shopping_list entity.
+
+trigger_shopping:
+  url: "http://<NAS-IP>:8000/shop"
+  method: POST
+  headers:
+    X-API-Secret: !secret shopping_api_secret
+    Content-Type: "application/json"
+  timeout: 30

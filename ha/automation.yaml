@@ -1,0 +1,11 @@
+# Dashboard button trigger
+# 1. Create helper: Settings > Helpers > Add > Button, name it "Send to Sainsbury's"
+#    Entity ID will be: input_button.send_to_sainsburys
+# 2. Add that entity as a button card on your dashboard
+
+- alias: "Send shopping list to Sainsbury's"
+  triggers:
+    - trigger: state
+      entity_id: input_button.send_to_sainsburys
+  actions:
+    - action: rest_command.trigger_shopping
