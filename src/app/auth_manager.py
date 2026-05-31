@@ -21,9 +21,9 @@ log = logging.getLogger(__name__)
 _proc: pexpect.spawn | None = None
 _lock = threading.Lock()
 
-_SMS_PATTERNS = ["(?i)verification code", "(?i)one.time", "(?i)sms", "(?i)otp", "(?i)code sent"]
-_SUCCESS_PATTERNS = ["(?i)logged in", "(?i)success", "(?i)welcome", "(?i)signed in"]
-_FAIL_PATTERNS = ["(?i)invalid", "(?i)incorrect", "(?i)failed", "(?i)error"]
+_SMS_PATTERNS = ["(?i)code sent", "(?i)check your phone", "(?i)verification code", "(?i)otp"]
+_SUCCESS_PATTERNS = ["Logged in to"]
+_FAIL_PATTERNS = ["(?i)Login failed"]
 
 
 def check_auth() -> AuthStatus:
