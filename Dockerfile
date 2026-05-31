@@ -22,7 +22,8 @@ RUN python3 -m venv /venv \
 COPY src/ .
 
 RUN useradd -m appuser \
-    && chown -R appuser /app /opt/uk-grocery-cli /venv
+    && mkdir -p /home/appuser/.sainsburys \
+    && chown -R appuser /app /opt/uk-grocery-cli /venv /home/appuser/.sainsburys
 
 USER appuser
 
